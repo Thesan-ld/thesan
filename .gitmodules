@@ -1,0 +1,3 @@
+[submodule "thesan-studio"]
+	path = thesan-studio
+	url = https://github.com/franknoirot/thesan-studio.git
