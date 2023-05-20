@@ -1,5 +1,6 @@
 import { getSanityServerClient } from "$lib/sanity";
 import { pageQuery, type PageType } from "$lib/sanityQueries";
+import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
 export const load = (async ({ params, locals: { previewMode } }) => {
@@ -8,16 +9,17 @@ export const load = (async ({ params, locals: { previewMode } }) => {
         { slug: params.slug }
     ) as PageType
 
-    if (page !== null) {
-        return {
-            previewMode,
-            slug: page?.slug?.current || params.slug,
-            initialData: page,
-        }
-    } else {
-        return {
-            status: 404,
-            body: new Error('Page not found')
-        }
+    console.log('page', page)
+
+    if (page === null) {
+        throw error(404, {
+            message: 'Not found'
+        });
+    }
+
+    return {
+        previewMode,
+        slug: page?.slug?.current || params.slug,
+        initialData: page,
     }
 }) satisfies PageServerLoad

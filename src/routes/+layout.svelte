@@ -32,7 +32,8 @@
 <style>
     main {
         min-block-size: 100vh;
+        max-inline-size: 1440px;
+        margin-inline: auto;
         box-sizing: border-box;
-        padding: 1rem;
     }
 </style>

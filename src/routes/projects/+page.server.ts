@@ -1,4 +1,5 @@
 import { publicClient, type ExpandedProject } from "$lib/sanity";
+import { countReferences } from "$lib/sanityQueries";
 import type * as Schema from '$lib/sanitySchema';
 import type { PageServerLoad } from './$types';
 
@@ -10,7 +11,7 @@ export const load = (async () => {
         'categories': categories[]->,
     }`) as Promise<ExpandedProject[]>
 
-    const categoriesPromise = publicClient.fetch(`*[_type == "category"]`) as Promise<Schema.Category[]>
+    const categoriesPromise = publicClient.fetch(`*[_type == "category" && ${countReferences('project')} > 0]`) as Promise<Schema.Category[]>
 
 const [projects, categories] = await Promise.all([projectsPromise, categoriesPromise])
 

@@ -21,7 +21,7 @@
 </script>
 
 
-<div class="content">
+<div class="content mt-36">
     <SEO title={$pageData?.seo?.title} description={$pageData?.seo?.description} />
     <PageContent value={$pageData?.content} />
 </div>

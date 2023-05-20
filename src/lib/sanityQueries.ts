@@ -1,6 +1,10 @@
 import type * as Schema from '$lib/sanitySchema'
 import { expandedPageContentBodyQuery, type ExpandedPageContent, type Replace } from "./sanity"
 
+export const countReferences = (otherTypeName: string) => `
+    count(*[_type == "${otherTypeName}" && references(^._id)])
+`
+
 export const pageQuery = `
     *[_type == "page" && slug.current == $slug][0] {
         ${expandedPageContentBodyQuery}

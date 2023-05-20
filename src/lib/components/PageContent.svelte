@@ -7,8 +7,6 @@
 	import ProjectCarousel from './ProjectCarousel.svelte';
 	import type { ExpandedPageContent } from '$lib/sanity';
     export let value: ExpandedPageContent = [];
-
-    console.log({ pageData: value })
 </script>
 
 {#each value as block (block._key)}

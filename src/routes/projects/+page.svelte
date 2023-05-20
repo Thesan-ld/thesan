@@ -5,6 +5,7 @@
     import type * as Schema from '$lib/sanitySchema';
 	import type { ExpandedProject } from '$lib/sanity.js';
 	import { goto } from '$app/navigation';
+	import ContactCta from '$lib/components/ContactCTA.svelte';
 
     export let data; 
 
@@ -23,12 +24,26 @@
         : filteredProjects;
 </script>
 
-<section class="max-w-5xl mx-auto mt-16 mb-12">
+<section class="max-w-5xl mx-auto mt-36 mb-12 top-area">
     <h1>Projects</h1>
-    <p class="text-xl mt-4">Here are some of the projects I've worked on.</p>
     <div class="controls">
+        <div>
+            <label for="search" class="sr-only">Search projects</label>
+            <input type="search" name="search" placeholder="Search projects"
+                on:input={(event) => {
+                    searchTerm = event.currentTarget.value
+                    if (!searchTerm) $page.url.searchParams.delete('search')
+                    else {
+                        $page.url.searchParams.set('search', searchTerm)
+                    }
+                    goto($page.url.searchParams ? '?' + $page.url.searchParams.toString() : '', { replaceState: true, keepFocus: true })
+                }}
+                value={searchTerm}
+                class="p-2 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-violet-800 focus:border-transparent"
+            />
+        </div>
         <div class="categories-wrapper">
-            <p>Filter by category:</p>
+            <p class="sr-only">Filter by category:</p>
             <ul class="categories">
                 <li>
                     <a href="/projects" class={(!categoryParam) ? ' current' : ''}>
@@ -44,19 +59,6 @@
                 {/each}
             </ul>
         </div>
-        <label for="search" class="sr-only">Search projects</label>
-        <input type="search" name="search" placeholder="Search projects"
-            on:input={(event) => {
-                searchTerm = event.currentTarget.value
-                if (!searchTerm) $page.url.searchParams.delete('search')
-                else {
-                    $page.url.searchParams.set('search', searchTerm)
-                }
-                goto($page.url.searchParams ? '?' + $page.url.searchParams.toString() : '', { replaceState: true, keepFocus: true })
-            }}
-            value={searchTerm}
-            class="p-2 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-violet-800 focus:border-transparent"
-        />
     </div>
 </section>
 <section class="project-grid">
@@ -64,6 +66,7 @@
         <ProjectCard {project} />
     {/each}
 </section>
+<ContactCta />
 
 <style lang="postcss">
     small {
@@ -83,8 +86,8 @@
 
     .controls {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        flex-direction: column;
+        align-items: flex-end;
     }
 
     .categories-wrapper {
@@ -99,11 +102,12 @@
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: flex-end;
     }
 
     .categories li {
         margin-inline: 1rem;
+        margin-block: 10px;
     }
 
     .categories a {
@@ -116,11 +120,17 @@
     .categories a.current {
         @apply text-slate-400;
     }
+
+    .top-area {
+        display: flex;
+        align-items: space-between;
+        gap: 120px;
+    }
     
     .project-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-auto-rows: 200px;
         grid-gap: 1rem;
-        
     }
 </style>
