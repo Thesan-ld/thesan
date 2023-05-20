@@ -198,11 +198,12 @@
 	}
 
 	.text-wrapper span {
-		transform: rotate(90deg);
+		transform-origin: center;
+        transform: translateX(-50%) rotate(90deg) translateY(-100%);
 	}
 
 	.step-btn:last-of-type .text-wrapper span {
-		transform: rotate(-90deg);
+		transform: translateX(50%) rotate(-90deg) translateY(-100%);
 	}
 
 	.step-btn:last-of-type .text-wrapper {
