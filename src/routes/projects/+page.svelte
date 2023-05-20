@@ -5,7 +5,7 @@
     import type * as Schema from '$lib/sanitySchema';
 	import type { ExpandedProject } from '$lib/sanity.js';
 	import { goto } from '$app/navigation';
-	import ContactCta from '$lib/components/ContactCTA.svelte';
+	import ContactCta from '$lib/components/ContactCta.svelte';
 
     export let data; 
 
