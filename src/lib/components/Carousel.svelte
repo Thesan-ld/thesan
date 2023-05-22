@@ -48,7 +48,7 @@
 		{#each images || [] as image, index (image?._id)}
 			<li class:active={currentIndex == index} class:fromLeft={shouldMoveFromLeft}>
                 <figure>
-                    <img src={image?.url} alt="" />
+                    <img src={image?.url} alt="" class:portrait={image?.metadata?.dimensions?.aspectRatio && image.metadata.dimensions.aspectRatio < 1} />
                 </figure>
 			</li>
 		{/each}
@@ -154,6 +154,10 @@
         height: 100%;
         position: absolute;
         inset: 0;
+    }
+
+    .stage li img.portrait {
+        object-fit: contain;
     }
 
 	.step-btn {

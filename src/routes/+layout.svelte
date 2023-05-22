@@ -32,7 +32,7 @@
 <style>
     main {
         min-block-size: 100vh;
-        max-inline-size: 1440px;
+        max-inline-size: 1920px;
         margin-inline: auto;
         box-sizing: border-box;
     }

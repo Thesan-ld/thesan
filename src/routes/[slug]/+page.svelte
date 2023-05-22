@@ -11,8 +11,6 @@
 
     $: enabled = previewMode && !!slug
 
-    $: console.log('enabled', enabled)
-
     $: ({ data: pageData } = previewSubscription(pageQuery, {
         params: { slug },
         initialData,

@@ -11,9 +11,36 @@
 
     $: categoryParam = $page.url.searchParams.get('category')
     const isCurrentCategory = (category: Schema.Category) => category.slug?.current === categoryParam;
-    $: filteredProjects = (categoryParam) ? data.projects?.filter(project => project.categories?.some(isCurrentCategory)) : data.projects;
+    $: filteredProjects = ((categoryParam) ? data.projects?.filter(project => project.categories?.some(isCurrentCategory)) : data.projects)
+    $: offsetProjects = applyOffsets(filteredProjects || []) as ExpandedProject[];
 
-    $: fuse = new Fuse(filteredProjects as readonly ExpandedProject[], {
+    function applyOffsets(arrayWithOffsets: Partial<{ sortOffset: number }>[]) {
+        const returnArray = [] as typeof arrayWithOffsets;
+        let forwardOffsets = [] as [number, typeof arrayWithOffsets[0]][];
+        let insertedElementCount = 0
+
+        arrayWithOffsets.forEach((item, index) => {
+            const foundForwardOffset = forwardOffsets.find(([offsetIndex]) => offsetIndex === index);
+            if (foundForwardOffset) {
+                returnArray.push(foundForwardOffset[1]);
+                forwardOffsets = forwardOffsets.filter(([offsetIndex]) => offsetIndex !== index); // remove from forwardOffsets
+                insertedElementCount++;
+            }
+
+            if (!item.sortOffset) {
+                returnArray.push(item);
+            } else if (item.sortOffset < 0) {
+                returnArray.splice(Math.max(index + (item.sortOffset || 0), 0), 0, item);
+                insertedElementCount++;
+            } else {
+                forwardOffsets.push([index + item.sortOffset + insertedElementCount, item]);
+            }
+        })
+
+        return [...returnArray, ...forwardOffsets.map(([, item]) => item)];
+    }
+
+    $: fuse = new Fuse(offsetProjects as readonly ExpandedProject[], {
         keys: ['title', 'categories.title'],
         threshold: 0.5,
     })
@@ -21,10 +48,10 @@
 
     $: searchedProjects = (searchTerm) 
         ? fuse.search(searchTerm).map(result => result.item)
-        : filteredProjects;
+        : offsetProjects;
 </script>
 
-<section class="max-w-5xl mx-auto mt-36 mb-12 top-area">
+<section class="p-8 max-w-5xl mx-auto mt-36 mb-12 top-area">
     <h1>Projects</h1>
     <div class="controls">
         <div>
@@ -62,7 +89,7 @@
     </div>
 </section>
 <section class="project-grid">
-    {#each searchedProjects || [] as project}
+    {#each searchedProjects || [] as project, index (project._id)}
         <ProjectCard {project} />
     {/each}
 </section>
@@ -71,7 +98,7 @@
 <style lang="postcss">
     small {
         @apply font-normal text-sm;
-        vertical-align: middle;
+        vertical-align: text-bottom;
         display: inline-grid;
         width: 2.5ch;
         height: 2.5ch;
@@ -88,6 +115,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-end;
+        user-select: none;
     }
 
     .categories-wrapper {

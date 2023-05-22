@@ -243,6 +243,13 @@ export interface Project extends SanityDocument {
    *
    */
   date?: string;
+
+  /**
+   * Sort Offset — `number`
+   *
+   * Used to offset the sort order of this project on the landing page.
+   */
+  sortOffset?: number;
 }
 
 /**
@@ -308,6 +315,28 @@ export interface SiteSettings extends SanityDocument {
    *
    */
   navigation?: Array<SanityKeyed<NavigationItem>>;
+
+  /**
+   * Default Project Sort — `object`
+   *
+   *
+   */
+  defaultProjectSort?: {
+    _type: "defaultProjectSort";
+    /**
+     * Sort By — `string`
+     *
+     *
+     */
+    sortBy?: "date" | "title" | "_updatedAt" | "_createdAt";
+
+    /**
+     * Sort Direction — `string`
+     *
+     *
+     */
+    sortDirection?: "asc" | "desc";
+  };
 
   /**
    * Footer Navigation — `array`

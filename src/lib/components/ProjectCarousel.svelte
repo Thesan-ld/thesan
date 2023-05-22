@@ -51,7 +51,11 @@
 	{/if}
 	<ul class="stage">
 		{#each data?.projects || [] as project, index (project?._id)}
-			<li bind:this={listItems[index]} class:active={currentIndex == index} class:fromLeft={shouldMoveFromLeft}>
+			<li bind:this={listItems[index]}
+				class:active={currentIndex == index}
+				class:fromLeft={shouldMoveFromLeft}
+				class:portrait={project?.coverImage?.metadata?.dimensions?.aspectRatio < 1}
+			>
 				<ProjectCard {project} />
 			</li>
 		{/each}
@@ -117,12 +121,7 @@
 	}
 
 	.stage li {
-		scroll-snap-align: center;
-		scroll-snap-stop: always;
 		display: grid;
-		min-inline-size: 100%;
-		min-block-size: 600px;
-		block-size: 100%;
 		place-content: center;
 		@apply sr-only;
 	}
@@ -131,6 +130,9 @@
 		--dir: 1; /* from the right by default */
 		@apply not-sr-only;
 		animation: slide .3s ease-out forwards;
+		min-inline-size: 100%;
+		min-block-size: 600px;
+		block-size: 100%;
 	}
 
 	.stage li.fromLeft {
@@ -149,14 +151,11 @@
 	}
 
 	.stage li > :global(a) {
-		@apply max-w-full h-full;
+		@apply absolute inset-0;
 	}
 
-    .stage li > :global(img) {
-        object-fit: cover;
-        object-position: center;
-        width: 100%;
-        height: 100%;
+	.stage li.portrait :global(img) {
+        object-fit: contain;
     }
 
 	.step-btn {

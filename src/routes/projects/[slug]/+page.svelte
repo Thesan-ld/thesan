@@ -10,17 +10,23 @@
 </section>
 <section class="details">
     <h1>{data.project?.title}</h1>
+    {#if data.project?.description}
     <div class="content">
         <PortableText value={data.project?.description}/>
     </div>
+    {/if}
 </section>
 <ContactCta />
 
 <style lang="postcss">
     .details {
-        @apply max-w-5xl mx-auto mb-24;
+        @apply max-w-5xl mx-auto;
         margin-top: -60px;
         position: relative;
         @apply bg-zinc-900 rounded-lg py-5 px-10;
+    }
+
+    h1:only-child {
+        margin-bottom: 0;
     }
 </style>

@@ -9,8 +9,6 @@ export const load = (async ({ params, locals: { previewMode } }) => {
         { slug: params.slug }
     ) as PageType
 
-    console.log('page', page)
-
     if (page === null) {
         throw error(404, {
             message: 'Not found'
