@@ -35,13 +35,19 @@ export type WithSanityKey<T> = (T & { _key: string })
 export type WithCount<T> = T & { count: number }
 
 export type ExpandedProject = Replace<
-  Replace<
-    Replace<Schema.Project, 'coverImage', Schema.SanityImageAsset>,
-    'images',
-    Schema.SanityImageAsset[]
-  >,
+  PartiallyExpandedProject,
   'categories',
   Schema.Category[]
+>
+
+export type PartiallyExpandedProject = Replace<
+  Replace<
+    Schema.Project,
+    'coverImage',
+    Schema.SanityImageAsset
+  >,
+  'images',
+  Schema.SanityImageAsset[]
 >
 
 export type ExpandedBasicSection = Replace<Schema.BasicSection, 'image', Schema.SanityImageAsset>
@@ -51,10 +57,11 @@ export type ExpandedCategoryGrid = Replace<
   WithCount<Schema.Category>[]
 >
 export type ExpandedProjectCarousel = Replace<
-  Replace<Schema.ProjectCarousel, 'projects', Schema.Project[]>,
+  Schema.ProjectCarousel,
   'projects',
-  ExpandedProject[]
+  (PartiallyExpandedProject | Schema.SanityImageAsset)[]
 >
+
 
 type UnmodifiedPageContentBlocks = Exclude<Schema.PageContent[0], 
   Schema.BasicSection |
@@ -69,20 +76,53 @@ export type ExpandedPageContent = (
     UnmodifiedPageContentBlocks
   )[]
 
+export type AltProjectType = {
+  _type: 'project' | 'image',
+  _id: string,
+  title?: string,
+  slug?: Schema.Project['slug'],
+  image: Schema.SanityImageAsset
+}
+
+
+export type AltProjectCarouselType = Replace<
+  Schema.ProjectCarousel,
+  'projects',
+  AltProjectType[]
+>
+
+export type PageContentType = (
+  WithSanityKey<Schema.BasicSection> |
+  WithSanityKey<ExpandedCategoryGrid> |
+  WithSanityKey<AltProjectCarouselType>
+)
 
 export const expandedPageContentBodyQuery = `
   ...,
   content[] {
-      ...,
-      "image": image { ...asset-> },
-      categories[]-> {
+      _type == "basicSection" => {
           ...,
-          "count": count(*[_type == "project" && references(^._id)])
+          'image': image.asset->
       },
-      projects[]->{
+      _type == "categoryGrid" => {
           ...,
-          "coverImage": coverImage.asset->,
-          "images": images[].asset->,
+          categories[]->,
+      },
+      _type == "projectCarousel" => {
+          ...,
+          projects[] {
+              _type,
+              _id,
+              _type == "reference" => @-> {
+                _type,
+                title,
+                slug,
+                'image': coverImage.asset->,
+              },
+              _type == "image" => {
+                "image": asset->
+              }
+          }
       },
   },
 `

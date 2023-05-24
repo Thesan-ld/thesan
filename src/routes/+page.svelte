@@ -3,6 +3,8 @@
     import SEO from '$lib/components/SEO.svelte';
 
     export let data;
+
+    $: console.log({ data });
 </script>
 
 

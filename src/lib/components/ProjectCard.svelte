@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { ExpandedProject } from "$lib/sanity";
+	import type { AltProjectType, ExpandedProject } from "$lib/sanity";
 
-    export let project: ExpandedProject;
+    export let project: any
 </script>
 
 <a href={`/projects/${project?.slug?.current}`}>
-    <img src={project?.coverImage?.url} alt="" aria-hidden="true" />
+    <img src={(project?.image?.url) ? project?.image?.url : project?.coverImage?.url} alt="" aria-hidden="true" />
     <span>{project?.title}</span>
 </a>
 

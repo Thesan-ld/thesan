@@ -1,10 +1,7 @@
 <script lang="ts">
-	import { slide } from 'svelte/transition';
-	import type { ExpandedProject, ExpandedProjectCarousel } from '$lib/sanity';
+	import type { AltProjectCarouselType, ExpandedProjectCarousel } from '$lib/sanity';
 	import ProjectCard from './ProjectCard.svelte';
-	export let data: ExpandedProjectCarousel;
-
-	$: console.log({ data });
+	export let data: AltProjectCarouselType;
 
 	let listItems = [] as HTMLLIElement[];
 	let currentIndex = 0;
@@ -45,18 +42,24 @@
 				<span>Previous</span>
 			</div>
 			<div class="img-wrapper">
-				<img src={data?.projects[backwardIndex]?.coverImage?.url} alt="" />
+				<img src={data?.projects[backwardIndex].image?.url} alt="" />
 			</div>
 		</button>
 	{/if}
 	<ul class="stage">
-		{#each data?.projects || [] as project, index (project?._id)}
+		{#each data?.projects || [] as project, index (project?._id + index.toString())}
 			<li bind:this={listItems[index]}
 				class:active={currentIndex == index}
 				class:fromLeft={shouldMoveFromLeft}
-				class:portrait={project?.coverImage?.metadata?.dimensions?.aspectRatio < 1}
+				class:portrait={project?.image?.metadata?.dimensions?.aspectRatio < 1}
 			>
+				{#if project._type === 'project'}	
 				<ProjectCard {project} />
+				{:else}
+				<figure>
+					<img src={project.image.url} alt="" />
+				</figure>
+				{/if}
 			</li>
 		{/each}
 	</ul>
@@ -72,12 +75,12 @@
 				<span>Next</span>
 			</div>
 			<div class="img-wrapper">
-				<img src={data?.projects[forwardIndex]?.coverImage?.url} alt="" />
+				<img src={data?.projects[forwardIndex]?.image?.url} alt="" />
 			</div>
 		</button>
 	{/if}
 	<ul class="dots" aria-hidden="true">
-		{#each data?.projects || [] as project, index (project?._id)}
+		{#each data?.projects || [] as project, index (project?._id + index.toString())}
 			<li>
 				<button
 					class:active={index === currentIndex}
@@ -150,6 +153,21 @@
 		}
 	}
 
+	/* Image slide styles */
+	.stage li > figure {
+		@apply max-w-full h-full;
+	}
+
+    .stage li img {
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        inset: 0;
+    }
+
+	/* Project slides styles */
 	.stage li > :global(a) {
 		@apply absolute inset-0;
 	}

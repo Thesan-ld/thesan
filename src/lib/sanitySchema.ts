@@ -482,7 +482,15 @@ export type ProjectCarousel = {
    *
    *
    */
-  projects?: Array<SanityKeyedReference<Project>>;
+  projects?: Array<
+    | SanityKeyedReference<Project>
+    | SanityKeyed<{
+        _type: "image";
+        asset: SanityReference<SanityImageAsset>;
+        crop?: SanityImageCrop;
+        hotspot?: SanityImageHotspot;
+      }>
+  >;
 };
 
 export type Seo = {
