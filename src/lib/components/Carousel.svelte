@@ -45,7 +45,7 @@
 		</button>
 	{/if}
 	<ul class="stage">
-		{#each images || [] as image, index (image?._id)}
+		{#each images || [] as image, index ((image?._id || '-') + index)}
 			<li class:active={currentIndex == index} class:fromLeft={shouldMoveFromLeft}>
                 <figure>
                     <img src={image?.url} alt="" class:portrait={image?.metadata?.dimensions?.aspectRatio && image.metadata.dimensions.aspectRatio < 1} />
@@ -70,7 +70,7 @@
 		</button>
 	{/if}
 	<ul class="dots" aria-hidden="true">
-		{#each images || [] as image, index (image?._id)}
+		{#each images || [] as image, index ((image?._id || '-') + index)}
 			<li>
 				<button
 					class:active={index === currentIndex}
