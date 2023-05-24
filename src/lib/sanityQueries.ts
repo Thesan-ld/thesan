@@ -26,9 +26,37 @@ export const projectQuery = `
         ...,
         'coverImage': coverImage.asset->,
         'images': images[].asset->,
-        'categories': categories[]->,
-        'collaborators': collaborators[]->,
+        categories[]->,
+        collaborators[] {
+            role,
+            'person': collaborator->{ ..., 'image': image.asset-> }
+        }
     }
 `
 
-export type ProjectType = Replace<Schema.Project, 'collaborators', Schema.Collaborator[]>
+export type CollaboratorType = Replace<
+    Schema.Collaborator,
+    'image',
+    Schema.SanityImageAsset
+>
+
+export type ProjectType = Replace<
+    Replace<
+        Replace<
+            Replace<
+                Schema.Project,
+                'collaborators',
+                {
+                    role: string,
+                    person: CollaboratorType
+                }[]
+            >,
+            'categories',
+            Schema.Category[]
+        >,
+        'images',
+        Schema.SanityImageAsset[]
+    >,
+    'coverImage',
+    Schema.SanityImageAsset
+>

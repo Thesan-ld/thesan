@@ -30,8 +30,7 @@
         bottom: 1rem;
         left: 1rem;
         @apply text-white bg-black;
-        border: solid 1px;
-        @apply border-violet-500;
+        border: solid 1px hsla(19, 99%, 63%, 1);
         @apply px-4 py-2 rounded;
         transition: transform var(--t), opacity var(--t);
         opacity: 0;

@@ -12,9 +12,12 @@
     $: categoryParam = $page.url.searchParams.get('category')
     const isCurrentCategory = (category: Schema.Category) => category.slug?.current === categoryParam;
     $: filteredProjects = ((categoryParam) ? data.projects?.filter(project => project.categories?.some(isCurrentCategory)) : data.projects)
-    $: offsetProjects = applyOffsets(filteredProjects || []) as ExpandedProject[];
+    $: offsetProjects = applyOffsets(filteredProjects);
 
-    function applyOffsets(arrayWithOffsets: Partial<{ sortOffset: number }>[]) {
+    function applyOffsets<T extends { sortOffset?: number }>(
+        arrayWithOffsets?: T[]
+    ): T[] | undefined {
+        if (!arrayWithOffsets) return;
         const returnArray = [] as typeof arrayWithOffsets;
         let forwardOffsets = [] as [number, typeof arrayWithOffsets[0]][];
         let insertedElementCount = 0

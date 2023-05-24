@@ -89,11 +89,11 @@ export interface Collaborator extends SanityDocument {
   slug?: { _type: "slug"; current: string };
 
   /**
-   * Description — `array`
+   * Website — `url`
    *
    *
    */
-  description?: Array<SanityKeyed<SanityBlock>>;
+  website?: string;
 
   /**
    * Image — `image`
@@ -106,6 +106,13 @@ export interface Collaborator extends SanityDocument {
     crop?: SanityImageCrop;
     hotspot?: SanityImageHotspot;
   };
+
+  /**
+   * Description — `array`
+   *
+   *
+   */
+  description?: Array<SanityKeyed<SanityBlock>>;
 }
 
 /**
