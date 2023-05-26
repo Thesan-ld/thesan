@@ -54,12 +54,15 @@
         : offsetProjects;
 </script>
 
-<section class="p-8 max-w-5xl mx-auto mt-36 mb-12 top-area">
+<section class="p-8 mx-4 mt-36 top-area">
     <h1>Projects</h1>
     <div class="controls">
-        <div>
-            <label for="search" class="sr-only">Search projects</label>
-            <input type="search" name="search" placeholder="Search projects"
+        <div class="search-wrap">
+            <label for="search">
+                <span class="sr-only">Search projects</span>
+                <img src="/search-icon.svg" alt="" width="17" />
+            </label>
+            <input type="search" name="search" placeholder={`Search ${offsetProjects?.length || 'all'}${categoryParam ? (' ' + categoryParam) : ''} projects`}
                 on:input={(event) => {
                     searchTerm = event.currentTarget.value
                     if (!searchTerm) $page.url.searchParams.delete('search')
@@ -69,7 +72,6 @@
                     goto($page.url.searchParams ? '?' + $page.url.searchParams.toString() : '', { replaceState: true, keepFocus: true })
                 }}
                 value={searchTerm}
-                class="p-2 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-violet-800 focus:border-transparent"
             />
         </div>
         <div class="categories-wrapper">
@@ -93,7 +95,7 @@
 </section>
 <section class="project-grid">
     {#each searchedProjects || [] as project, index (project._id)}
-        <ProjectCard {project} />
+        <ProjectCard {project} maxSize={500} />
     {/each}
 </section>
 <ContactCta />
@@ -107,7 +109,7 @@
         height: 2.5ch;
         place-content: center;
         line-height: 1;
-        @apply p-1 rounded-full bg-slate-700 text-slate-400;
+        @apply p-1 rounded-full bg-slate-800 text-slate-400;
     }
 
     .current small {
@@ -119,6 +121,27 @@
         flex-direction: column;
         align-items: flex-end;
         user-select: none;
+    }
+
+    .search-wrap {
+        background: hsla(315, 82%, 30%, 0.3);
+        @apply rounded;
+        display: flex;
+        align-items: center;
+        padding: 2px;
+        padding-inline-end: 5px;
+        gap: 5px;
+        width: min(100%, 350px);
+    }
+
+    .search-wrap label {
+        order: 2;
+    }
+
+    .search-wrap input {
+        border: 0;
+        @apply bg-slate-800 rounded-s px-2 py-1;
+        flex: 1;
     }
 
     .categories-wrapper {
@@ -133,28 +156,42 @@
         display: flex;
         align-items: center;
         flex-wrap: wrap;
+        gap: .5rem;
         justify-content: flex-end;
+        max-width: 600px;
     }
 
     .categories li {
-        margin-inline: 1rem;
-        margin-block: 10px;
+        margin-block: 5px;
     }
 
     .categories a {
         text-decoration: none;
         color: inherit;
         font-size: 18px;
-        @apply text-slate-600 hover:text-slate-500 focus:text-slate-500;
+        @apply flex gap-2 items-center;
+        @apply text-slate-400;
+        @apply border border-neutral-800 px-3 py-0.5 rounded-full;
     }
 
-    .categories a.current {
-        @apply text-slate-400;
+    a:not(.current) {
+        @apply hover:text-slate-500 focus:text-slate-500;
     }
+
+    a.current {
+        color: hsla(335, 96%, 60%, 1);
+        background: hsla(315, 82%, 30%, 0.3);
+    }
+
+    a.current small {
+        color: rgb(255, 78, 152);
+        background: hsla(315, 79%, 45%, 0.57);
+    }
+
 
     .top-area {
         display: flex;
-        align-items: space-between;
+        justify-content: space-between;
         gap: 120px;
     }
     

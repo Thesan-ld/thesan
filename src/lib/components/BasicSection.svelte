@@ -1,24 +1,27 @@
 <script lang="ts">
 	import type { ExpandedBasicSection, Replace } from '$lib/sanity';
-    import type * as Schema from '$lib/sanitySchema';
     import { PortableText } from '@portabletext/svelte'
 	import ContactForm from './ContactForm.svelte';
+	import Cta from './Cta.svelte';
 
     export let data: ExpandedBasicSection
 
     const components = {
         types: {
-            contactForm: ContactForm
+            contactForm: ContactForm,
+            cta: Cta
         }
     }
 </script>
 
-<section>
+<section class:hasImage={data.image}>
     <div class="content">
         <PortableText value={data.content} {components}/>
     </div>
     {#if data.image}
-    <figure class={data.contentColumn === 'right' ? 'first' : ''}>
+    <figure class:first={data.contentColumn === 'right'}
+        class:portrait={data.image.metadata.dimensions.aspectRatio < 1}
+    >
         <img src={data.image.url} alt='' />
         <!-- {#if data.image.caption}
         <figcaption>{data.image.caption}</figcaption>
@@ -29,24 +32,68 @@
 
 <style lang="postcss">
     section {
-        display: flex;
+        display: grid;
         align-items: center;
         gap: 1rem;
-        @apply my-12;
-        @apply max-w-5xl mx-auto;
+        justify-content: center;
+        @apply mb-24;
+        @apply max-w-6xl mx-auto;
+    }
+
+    section:not(:last-child) {
+        @apply mb-0;
+    }
+
+    section.hasImage {
+        grid-template-columns: 1fr 1fr;
     }
 
     .content {
         max-inline-size: 800px;
-        margin: 0 auto;
+        width: 100%;
+        margin-block: 8px; 
+        margin-inline-start: 30px;
+        align-self: stretch;
     }
 
-    section:has(figure) .content {
-        padding-inline-end: 2rem;
+    .content :global(p:not(:empty)) {
+        @apply my-6;
+    }
+
+    .content :global(p a) {
+        color: #FECB6E;
+    }
+    
+    .content :global(p a:hover),
+    .content :global(p a:focus) {
+        color: #FE7E43;
+    }
+
+    /* Contact form styles */
+    .content :global(section) {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content :global(section form) {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
+    }
+
+    .content :global(section label:has(textarea)) {
+        flex: 1;
     }
 
     figure {
         margin: 0;
+        position: relative;
+        align-self: stretch;
+        justify-self: stretch;
+        overflow: hidden;
+        margin-inline-start: -30px;
     }
 
     figure.first {
@@ -54,6 +101,16 @@
     }
 
     figure img {
-        max-inline-size: 100%;
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        object-fit: cover;
+        object-position: center;
     }
+
+    /* .portrait img {
+        object-fit: contain;
+    } */
 </style>

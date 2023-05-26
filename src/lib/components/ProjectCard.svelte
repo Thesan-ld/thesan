@@ -2,10 +2,13 @@
 	import type { AltProjectType, ExpandedProject } from "$lib/sanity";
 
     export let project: any
+    export let maxSize: number | undefined = undefined
 </script>
 
 <a href={`/projects/${project?.slug?.current}`}>
-    <img src={(project?.image?.url) ? project?.image?.url : project?.coverImage?.url} alt="" aria-hidden="true" />
+    <img src={((project?.image?.url) ? project?.image?.url : project?.coverImage?.url) + (maxSize ? '?w=' + maxSize : '')}
+        alt="" aria-hidden="true" loading="lazy"
+    />
     <span>{project?.title}</span>
 </a>
 

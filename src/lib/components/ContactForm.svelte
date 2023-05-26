@@ -10,22 +10,36 @@
     <PortableText value={data?.preFormContent || portableText.value?.preFormContent}/>
     <form>
         <label for="name">Name
-            <input type="text" id="name" name="name" placeholder="Your name" required>
+            <input type="text" id="name" name="name"
+                placeholder="Someone Neat" required
+            >
         </label>
         <label for="email">Email
-            <input type="email" id="email" name="email" placeholder="Your email" required>
+            <input type="email" id="email" name="email"
+                placeholder="someone.neat@company.com" required
+            >
         </label>
         <label for="subject">Subject
-            <input type="text" id="subject" name="subject" placeholder="Subject" required>
+            <input type="text" id="subject" name="subject"
+                placeholder="I need lighting design!" required
+            >
         </label>
         <label for="message">Message
-            <textarea id="message" name="message" placeholder="Your message" required></textarea>
+            <textarea id="message" name="message"
+                placeholder="Please include your venue, timeline, budget, and any other details you have available."
+            required></textarea>
         </label>
-        <button type="submit">Submit</button>
+        <button type="submit">
+            Submit
+            <svg viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="9.64746" cy="9.36096" r="9" fill="#8D490E" fill-opacity="0.3"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.64153 5.03508C8.03205 4.64456 8.66522 4.64456 9.05574 5.03508L13.3754 9.35471L9.05574 13.6743C8.66522 14.0649 8.03205 14.0649 7.64153 13.6743C7.251 13.2838 7.251 12.6506 7.64153 12.2601L10.5469 9.35471L7.64153 6.44929C7.251 6.05877 7.251 5.4256 7.64153 5.03508Z" fill="#FB9937"/>
+            </svg>
+        </button>
     </form>
 </section>
 
-<style>
+<style lang="postcss">
     section {
         @apply max-w-5xl mx-auto mb-24;
         @apply bg-zinc-900 rounded-lg py-5 px-10;
@@ -38,8 +52,12 @@
     }
 
     input, textarea {
-        @apply border border-zinc-500 rounded-lg p-2;
+        @apply border border-zinc-500 rounded p-2;
         @apply text-base;
+    }
+
+    input::placeholder, textarea::placeholder {
+        @apply text-zinc-500;
     }
 
     button[type="submit"] {
@@ -55,5 +73,12 @@
     button:hover, button:focus {
         background: #2a1f1a;
         color: #FB9937;
+    }
+
+    svg {
+        display: inline-block;
+        --size: 19px;
+        width: var(--size);
+        height: var(--size);
     }
 </style>

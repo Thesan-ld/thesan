@@ -18,7 +18,7 @@
     }
 
     h1 {
-        @apply text-6xl text-gray-400;
+        @apply text-6xl text-gray-200;
         @apply mb-8;
     }
 

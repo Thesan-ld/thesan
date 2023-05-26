@@ -1,8 +1,7 @@
 import type { RequestHandler } from './$types';
 import { env } from '$env/dynamic/private';
 import { setPreviewCookie } from '$lib/previewCookie';
-import type * as Schema from '$lib/sanitySchema';
-import { getSanityServerClient, type ExpandedPageContent, type Replace, expandedPageContentBodyQuery, type ExpandedProject } from '$lib/sanity';
+import { getSanityServerClient } from '$lib/sanity';
 import { error, redirect } from '@sveltejs/kit';
 import { pageQuery, projectQuery, type PageType, type ProjectType, homePageQuery, type HomePageType } from '$lib/sanityQueries';
 

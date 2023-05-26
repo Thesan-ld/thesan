@@ -35,7 +35,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1rem;
+        padding: .5rem;
         margin-inline: 20px;
         @apply rounded-full;
         position: fixed;
@@ -51,10 +51,11 @@
         display: flex;
         gap: 1rem;
         align-items: center;
+        margin: .5rem;
     }
 
     .logotype img {
-        width: 60px;
+        width: 70px;
     }
 
     a {
@@ -69,7 +70,7 @@
     }
 
     a.cta {
-        background: #272321;
+        background: hsla(20, 30%, 15%, 1);
         color: #FCC695;
         display: flex;
         align-items: center;
@@ -80,8 +81,8 @@
 
     a.cta:hover,
     a.cta:focus {
-        background: #2a1f1a;
-        color: #FB9937;
+        background: rgb(60, 31, 19);
+        color: #ff9b36;
     }
 
     svg {

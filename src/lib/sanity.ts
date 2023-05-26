@@ -106,7 +106,10 @@ export const expandedPageContentBodyQuery = `
       },
       _type == "categoryGrid" => {
           ...,
-          categories[]->,
+          categories[]-> {
+            ...,
+            "count": count(*[_type == "project" && references(^._id)])
+          },
       },
       _type == "projectCarousel" => {
           ...,

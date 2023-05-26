@@ -381,7 +381,9 @@ export type BasicSection = {
    *
    *
    */
-  content?: Array<SanityKeyed<SanityBlock> | SanityKeyed<ContactForm>>;
+  content?: Array<
+    SanityKeyed<SanityBlock> | SanityKeyed<ContactForm> | SanityKeyed<Cta>
+  >;
 
   /**
    * Image — `image`
@@ -435,6 +437,23 @@ export type ContactForm = {
    *
    */
   preFormContent?: Array<SanityKeyed<SanityBlock>>;
+};
+
+export type Cta = {
+  _type: "cta";
+  /**
+   * Link URL — `url`
+   *
+   * The URL to link to.
+   */
+  url?: string;
+
+  /**
+   * Link Text — `string`
+   *
+   * The text to display.
+   */
+  text?: string;
 };
 
 export type NavigationItem = {
