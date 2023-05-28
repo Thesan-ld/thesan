@@ -123,4 +123,18 @@
         object-fit: contain;
         position: relative;
     }
+
+    @media (max-width: 500px) {
+        section {
+            grid-template-columns: 1fr;
+        }
+        
+        .content {
+            margin-inline-start: 0;
+        }
+
+        figure {
+            margin-inline-start: 0;
+        }
+    }
 </style>

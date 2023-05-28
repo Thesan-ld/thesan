@@ -268,4 +268,20 @@
 	.dots button.active {
 		@apply bg-slate-200 border-slate-200;
 	}
+
+	@media (max-width: 450px) {
+		.step-btn {
+			width: 100px;
+			font-size: 1.75rem;
+			--swing: 8deg;
+		}
+
+		.text-wrapper span {
+			transform: translateX(-50%) rotate(90deg) translateY(-75%);
+		}
+
+		.step-btn:last-of-type .text-wrapper span {
+			transform: translateX(50%) rotate(-90deg) translateY(-75%);
+		}
+	}
 </style>

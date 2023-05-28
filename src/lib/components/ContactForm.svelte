@@ -29,6 +29,7 @@
                 placeholder="Please include your venue, timeline, budget, and any other details you have available."
             required></textarea>
         </label>
+        <input type="hidden" name="form-name" value="contact_form" />
         <button type="submit">
             Submit
             <svg viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">

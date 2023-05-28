@@ -3,6 +3,8 @@ import type { PageServerLoad } from "./$types";
 import { projectQuery, type ProjectType } from "$lib/sanityQueries";
 import { error } from "@sveltejs/kit";
 
+export const prerender = false
+
 export const load = (async ({ params, locals: { previewMode } }) => {
     const project = await getSanityServerClient(previewMode).fetch(
         projectQuery,

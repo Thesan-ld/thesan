@@ -19,7 +19,7 @@
 		currentIndex = currentIndex === 0 ? listItems.length - 1 : currentIndex - 1;
 	};
 
-	const intervalLength = 5000
+	const intervalLength = 50000
 	let interval = setInterval(() => {
 	    incrementIndex()
 	}, intervalLength)
@@ -100,6 +100,7 @@
 		@apply mx-auto;
 		position: relative;
 		block-size: 100vh;
+		overflow: hidden;
 	}
 
 	ul {
@@ -282,5 +283,21 @@
 
 	.dots button.active {
 		@apply bg-slate-200 border-slate-200;
+	}
+
+	@media (max-width: 450px) {
+		.step-btn {
+			width: 100px;
+			font-size: 1.75rem;
+			--swing: 8deg;
+		}
+
+		.text-wrapper span {
+			transform: translateX(-50%) rotate(90deg) translateY(-75%);
+		}
+
+		.step-btn:last-of-type .text-wrapper span {
+			transform: translateX(50%) rotate(-90deg) translateY(-75%);
+		}
 	}
 </style>

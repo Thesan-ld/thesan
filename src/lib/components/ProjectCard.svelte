@@ -49,4 +49,11 @@
     a:focus-within {
         @apply rounded-2xl;
     }
+
+    @media (hover: none) and (pointer: coarse) {
+        span {
+            transform: translateY(-10%);
+            opacity: 1;
+        }
+    }
 </style>
