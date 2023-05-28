@@ -1,7 +1,7 @@
 import { getSanityServerClient } from "$lib/sanity";
 import type { PageServerLoad } from "./$types";
 import { homePageQuery, type HomePageType } from "$lib/sanityQueries";
-import { error, type Actions, redirect } from "@sveltejs/kit";
+import { error } from "@sveltejs/kit";
 
 export const load = (async ({ locals: { previewMode }}) => {
     const data = await getSanityServerClient(previewMode).fetch(
@@ -18,12 +18,3 @@ export const load = (async ({ locals: { previewMode }}) => {
         page: data
     }
 }) satisfies PageServerLoad
-
-export const actions = {
-    default: async (event) => {
-        const formData = await event.request.formData()
-        console.log('post', formData);
-
-        throw redirect(303, '/contact-success')
-    }
-} satisfies Actions

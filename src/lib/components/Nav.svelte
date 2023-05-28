@@ -24,10 +24,10 @@
     </div>
     <nav>
         {#each navLinks as link}
-        <a href={link.url} class={
-            (link.isCallToAction ? 'cta ' : ' ') +
-            (isCurrentPage(link.url) ? 'active' : '')
-        } on:click={() => { menuOpen = false }}>
+        <a href={link.url}
+            class:cta={link.isCallToAction} class:active={isCurrentPage(link.url)}
+            on:click={() => { menuOpen = false }}
+        >
             {link.title}
             {#if link.isCallToAction}
             <svg viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
