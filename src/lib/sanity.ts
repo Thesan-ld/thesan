@@ -100,6 +100,7 @@ export type PageContentType = (
 export const expandedPageContentBodyQuery = `
   ...,
   content[] {
+      ...,
       _type == "basicSection" => {
           ...,
           'image': image.asset->

@@ -2,7 +2,7 @@
     <div class="glass">
         <h2>Make your event shine</h2>
         <p>Reach out today to get a quote on our lighting design services.</p>
-        <a href="/contact-us">
+        <a href="/contact">
             Contact us
             <svg viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="9.64746" cy="9.36096" r="9" fill="#8D490E" fill-opacity="0.3"/>

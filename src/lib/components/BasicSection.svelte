@@ -14,14 +14,14 @@
     }
 </script>
 
-<section class:hasImage={data.image}>
+<section class:hasImage={data.image}
+    class:portrait={data.image ? data.image.metadata.dimensions.aspectRatio < 1 : false}
+>
     <div class="content">
         <PortableText value={data.content} {components}/>
     </div>
     {#if data.image}
-    <figure class:first={data.contentColumn === 'right'}
-        class:portrait={data.image.metadata.dimensions.aspectRatio < 1}
-    >
+    <figure class:first={data.contentColumn === 'right'}>
         <img src={data.image.url} alt='' />
         <!-- {#if data.image.caption}
         <figcaption>{data.image.caption}</figcaption>
@@ -41,7 +41,7 @@
     }
 
     section:not(:last-child) {
-        @apply mb-0;
+        @apply mb-12;
     }
 
     section.hasImage {
@@ -56,17 +56,21 @@
         align-self: stretch;
     }
 
+    .portrait .content {
+        align-self: center;
+    }
+
     .content :global(p:not(:empty)) {
         @apply my-6;
     }
 
     .content :global(p a) {
-        color: #FECB6E;
+        color: hsla(335, 92%, 75%, 1);
     }
     
     .content :global(p a:hover),
     .content :global(p a:focus) {
-        color: #FE7E43;
+        color: hsla(335, 98%, 90%, 1);
     }
 
     /* Contact form styles */
@@ -110,7 +114,13 @@
         object-position: center;
     }
 
-    /* .portrait img {
+    .portrait figure {
+        height: auto;
+        max-height: 75vh;
+    }
+
+    .portrait img {
         object-fit: contain;
-    } */
+        position: relative;
+    }
 </style>

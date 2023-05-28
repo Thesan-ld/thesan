@@ -8,7 +8,7 @@
 
 <section>
     <PortableText value={data?.preFormContent || portableText.value?.preFormContent}/>
-    <form>
+    <form name="contact" method="POST" data-netlify="true">
         <label for="name">Name
             <input type="text" id="name" name="name"
                 placeholder="Someone Neat" required
