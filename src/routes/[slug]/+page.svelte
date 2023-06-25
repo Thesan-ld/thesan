@@ -16,8 +16,6 @@
         initialData,
         enabled,
     }));
-
-    $: console.log('content', $pageData?.content);
 </script>
 
 
