@@ -466,6 +466,13 @@ export type LogoGrid = {
   title?: string;
 
   /**
+   * Section Text Content — `array`
+   *
+   *
+   */
+  sectionTextContent?: Array<SanityKeyed<SanityBlock>>;
+
+  /**
    * Columns — `number`
    *
    *

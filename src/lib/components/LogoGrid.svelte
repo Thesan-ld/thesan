@@ -1,10 +1,12 @@
 <script lang='ts'>
 	import type { ExpandedLogoGrid } from '$lib/sanity';
+	import { PortableText } from '@portabletext/svelte';
 
     export let data: ExpandedLogoGrid
 </script>
 
 <section>
+    <PortableText value={data.sectionTextContent}/>
     <ul class="grid" style={`--columns: ${data.columns}`}>
         {#each data.logos as logo (logo._id)}
         <li>
@@ -30,7 +32,7 @@
     }
 
     li {
-        width: calc(100% / var(--columns) - var(--grid-gap));
+        width: calc(100% / var(--columns) - (var(--grid-gap) * (var(--columns) - 1) / var(--columns) ));
         margin-block: calc(var(--grid-gap) * 2);
         text-decoration: none;
     }
