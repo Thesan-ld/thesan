@@ -85,13 +85,13 @@
             <p class="sr-only">Filter by category:</p>
             <ul class="categories">
                 <li>
-                    <a href="/projects" class={(!categoryParam) ? ' current' : ''}>
+                    <a href="/projects" data-sveltekit-reload class={(!categoryParam) ? ' current' : ''}>
                         All <small>{data.projects?.length}</small>
                     </a>
                 </li>
                 {#each data.categories || [] as category}
                 <li>
-                    <a href="/projects?category={category.slug?.current}" class={(categoryParam === category.slug?.current) ? ' current' : ''}>
+                    <a href="/projects?category={category.slug?.current}" data-sveltekit-reload class={(categoryParam === category.slug?.current) ? ' current' : ''}>
                         {category.title} <small>{data.projects?.reduce((acc, project) => acc + (project.categories?.some(c => c._id === category._id) ? 1 : 0), 0)}</small>
                     </a>
                 </li>
