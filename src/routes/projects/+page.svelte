@@ -1,18 +1,26 @@
 <script lang="ts">
 	import Fuse from 'fuse.js'
-    import { page } from "$app/stores";
 	import ProjectCard from "$lib/components/ProjectCard.svelte";
     import type * as Schema from '$lib/sanitySchema';
 	import type { ExpandedProject } from '$lib/sanity.js';
 	import { goto } from '$app/navigation';
 	import ContactCta from '$lib/components/ContactCta.svelte';
+	import { onMount } from 'svelte';
 
     export let data; 
 
-    $: categoryParam = $page.url.searchParams.get('category')
+    let searchParams: URLSearchParams | undefined;
+    let categoryParam = ''
+    let searchTerm = ''
     const isCurrentCategory = (category: Schema.Category) => category.slug?.current === categoryParam;
     $: filteredProjects = ((categoryParam) ? data.projects?.filter(project => project.categories?.some(isCurrentCategory)) : data.projects)
     $: offsetProjects = applyOffsets(filteredProjects);
+
+    onMount(() => {
+        searchParams = new URL(window.location.toString()).searchParams
+        categoryParam = searchParams.get('category') || '';
+        searchTerm = searchParams.get('search') || '';
+    })
 
     function applyOffsets<T extends { sortOffset?: number }>(
         arrayWithOffsets?: T[]
@@ -47,7 +55,6 @@
         keys: ['title', 'categories.title'],
         threshold: 0.5,
     })
-    let searchTerm = $page.url.searchParams.get('search');
 
     $: searchedProjects = (searchTerm) 
         ? fuse.search(searchTerm).map(result => result.item)
@@ -65,11 +72,11 @@
             <input type="search" name="search" placeholder={`Search ${offsetProjects?.length || 'all'}${categoryParam ? (' ' + categoryParam) : ''} projects`}
                 on:input={(event) => {
                     searchTerm = event.currentTarget.value
-                    if (!searchTerm) $page.url.searchParams.delete('search')
+                    if (!searchTerm) searchParams?.delete('search')
                     else {
-                        $page.url.searchParams.set('search', searchTerm)
+                        searchParams?.set('search', searchTerm)
                     }
-                    goto($page.url.searchParams ? '?' + $page.url.searchParams.toString() : '', { replaceState: true, keepFocus: true })
+                    goto(searchParams ? '?' + searchParams.toString() : '', { replaceState: true, keepFocus: true })
                 }}
                 value={searchTerm}
             />
