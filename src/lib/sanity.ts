@@ -56,6 +56,8 @@ export type ExpandedCategoryGrid = Replace<
   'categories',
   WithCount<Schema.Category>[]
 >
+export type ExpandedLogoGrid = Replace<Schema.LogoGrid, 'logos', Schema.SanityImageAsset[]>
+
 export type ExpandedProjectCarousel = Replace<
   Schema.ProjectCarousel,
   'projects',
@@ -111,6 +113,10 @@ export const expandedPageContentBodyQuery = `
             ...,
             "count": count(*[_type == "project" && references(^._id)])
           },
+      },
+      _type == "logoGrid" => {
+          ...,
+          'logos': logos[].asset->
       },
       _type == "projectCarousel" => {
           ...,

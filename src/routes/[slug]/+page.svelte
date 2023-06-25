@@ -6,7 +6,6 @@
     import type { PageData } from "./$types";
     
     export let data = {} as PageData;
-    export const prerender = true
 
     $: ({ initialData, previewMode, slug } = data);
 

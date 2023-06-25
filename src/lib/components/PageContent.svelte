@@ -6,6 +6,7 @@
 	import ContactForm from './ContactForm.svelte';
 	import ProjectCarousel from './ProjectCarousel.svelte';
 	import type { ExpandedPageContent } from '$lib/sanity';
+	import LogoGrid from './LogoGrid.svelte';
     export let value: ExpandedPageContent = [];
 </script>
 
@@ -16,6 +17,8 @@
         <CategoryGrid data={block} />
     {:else if block._type === 'contactForm'}
         <ContactForm data={block} />
+    {:else if block._type === 'logoGrid'}
+        <LogoGrid data={block} />
     {:else if block._type === 'projectCarousel'}
         <ProjectCarousel data={block} />
     {/if}

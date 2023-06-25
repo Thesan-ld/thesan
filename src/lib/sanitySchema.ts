@@ -456,6 +456,37 @@ export type Cta = {
   text?: string;
 };
 
+export type LogoGrid = {
+  _type: "logoGrid";
+  /**
+   * Internal Label — `string`
+   *
+   * Only for internal use and will not be displayed on the website.
+   */
+  title?: string;
+
+  /**
+   * Columns — `number`
+   *
+   *
+   */
+  columns?: number;
+
+  /**
+   * Logos — `array`
+   *
+   *
+   */
+  logos?: Array<
+    SanityKeyed<{
+      _type: "image";
+      asset: SanityReference<SanityImageAsset>;
+      crop?: SanityImageCrop;
+      hotspot?: SanityImageHotspot;
+    }>
+  >;
+};
+
 export type NavigationItem = {
   _type: "navigationItem";
   /**
@@ -485,6 +516,7 @@ export type PageContent = Array<
   | SanityKeyed<ContactForm>
   | SanityKeyed<ProjectCarousel>
   | SanityKeyed<CategoryGrid>
+  | SanityKeyed<LogoGrid>
 >;
 
 export type ProjectCarousel = {
