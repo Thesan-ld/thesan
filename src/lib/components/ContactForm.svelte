@@ -5,30 +5,30 @@
     export let data: WithSanityKey<Schema.ContactForm>;
     export let portableText: CustomBlockComponentProps<Schema.ContactForm> = {} as any
 
-    function handleSubmit(event: SubmitEvent) {
-        event.preventDefault();
-        const form = event.currentTarget as HTMLFormElement
-        const data = new FormData();
-        fetch(form.action, {
-            method: form.method,
-            // @ts-ignore because I know this FormData has no File objects
-            // and can therefore be converted to a URLSearchParams
-            body: new URLSearchParams(data).toString(),
-            headers: {
-                'Accept': 'application/x-www-form-urlencoded;charset=UTF-8',
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            }
-        }).then(() => {
-            alert('Thank you for your message! We will get back to you as soon as possible.');
-        }).catch((error) =>
-            alert(error)
-        );
-    }
+    // function handleSubmit(event: SubmitEvent) {
+    //     event.preventDefault();
+    //     const form = event.currentTarget as HTMLFormElement
+    //     const data = new FormData();
+    //     fetch(form.action, {
+    //         method: form.method,
+    //         // @ts-ignore because I know this FormData has no File objects
+    //         // and can therefore be converted to a URLSearchParams
+    //         body: new URLSearchParams(data).toString(),
+    //         headers: {
+    //             'Accept': 'application/x-www-form-urlencoded;charset=UTF-8',
+    //             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    //         }
+    //     }).then(() => {
+    //         alert('Thank you for your message! We will get back to you as soon as possible.');
+    //     }).catch((error) =>
+    //         alert(error)
+    //     );
+    // }
 </script>
 
 <section>
     <PortableText value={data?.preFormContent || portableText.value?.preFormContent}/>
-    <form action="/" name="contact" method="POST" data-netlify="true" on:submit={handleSubmit}>
+    <form name="contact" method="POST" data-netlify="true">
         <label for="name">Name
             <input type="text" id="name" name="name"
                 placeholder="Someone Neat" required
@@ -49,7 +49,6 @@
                 placeholder="Please include your venue, timeline, budget, and any other details you have available."
             required></textarea>
         </label>
-        <input type="hidden" name="form-name" value="contact" />
         <button type="submit">
             Submit
             <svg viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
