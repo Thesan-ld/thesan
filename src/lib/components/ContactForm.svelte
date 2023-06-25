@@ -11,7 +11,9 @@
         const data = new FormData();
         fetch(form.action, {
             method: form.method,
-            body: data,
+            // @ts-ignore because I know this FormData has no File objects
+            // and can therefore be converted to a URLSearchParams
+            body: new URLSearchParams(data).toString(),
             headers: {
                 'Accept': 'application/x-www-form-urlencoded;charset=UTF-8',
                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
