@@ -19,8 +19,8 @@
                 placeholder="someone.neat@company.com" required
             >
         </label>
-        <label for="subject">Subject
-            <input type="text" id="subject" name="subject"
+        <label for="summary">Summary
+            <input type="text" id="summary" name="summary"
                 placeholder="I need lighting design!" required
             >
         </label>
