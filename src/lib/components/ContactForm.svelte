@@ -4,26 +4,6 @@
 	import { PortableText, type CustomBlockComponentProps } from '@portabletext/svelte';
     export let data: WithSanityKey<Schema.ContactForm>;
     export let portableText: CustomBlockComponentProps<Schema.ContactForm> = {} as any
-
-    // function handleSubmit(event: SubmitEvent) {
-    //     event.preventDefault();
-    //     const form = event.currentTarget as HTMLFormElement
-    //     const data = new FormData();
-    //     fetch(form.action, {
-    //         method: form.method,
-    //         // @ts-ignore because I know this FormData has no File objects
-    //         // and can therefore be converted to a URLSearchParams
-    //         body: new URLSearchParams(data).toString(),
-    //         headers: {
-    //             'Accept': 'application/x-www-form-urlencoded;charset=UTF-8',
-    //             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    //         }
-    //     }).then(() => {
-    //         alert('Thank you for your message! We will get back to you as soon as possible.');
-    //     }).catch((error) =>
-    //         alert(error)
-    //     );
-    // }
 </script>
 
 <section>
