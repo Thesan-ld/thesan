@@ -61,13 +61,13 @@
         : offsetProjects;
 </script>
 
-<section class="p-8 mx-4 mt-36 top-area">
+<section class="md:p-8 mx-4 mt-24 md:mt-36 md:flex justify-between md:gap-32">
     <h1>Projects</h1>
     <div class="controls">
         <div class="search-wrap">
             <label for="search">
                 <span class="sr-only">Search projects</span>
-                <img src="/search-icon.svg" alt="" width="17" />
+                <img src="/search-icon.svg" alt="" />
             </label>
             <input type="search" name="search" placeholder={`Search ${offsetProjects?.length || 'all'}${categoryParam ? (' ' + categoryParam) : ''} projects`}
                 on:input={(event) => {
@@ -112,8 +112,9 @@
         @apply font-normal text-sm;
         vertical-align: text-bottom;
         display: inline-grid;
-        width: 2.5ch;
-        height: 2.5ch;
+        --size: 3ch;
+        width: var(--size);
+        height: var(--size);
         place-content: center;
         line-height: 1;
         @apply p-1 rounded-full bg-slate-800 text-slate-400;
@@ -138,17 +139,23 @@
         padding: 2px;
         padding-inline-end: 5px;
         gap: 5px;
-        width: min(100%, 350px);
+        width: 100%;
+        @apply sm:max-w-xs;
     }
 
     .search-wrap label {
         order: 2;
     }
 
+    .search-wrap img {
+        @apply w-8 h-auto m-1;
+    }
+
     .search-wrap input {
         border: 0;
         @apply bg-slate-800 rounded-s px-2 py-1;
         flex: 1;
+        align-self: stretch;
     }
 
     .categories-wrapper {
@@ -160,11 +167,7 @@
     }
 
     .categories {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: .5rem;
-        justify-content: flex-end;
+        @apply flex flex-wrap items-center md:justify-end gap-2;
         max-width: 600px;
     }
 
@@ -175,14 +178,14 @@
     .categories a {
         text-decoration: none;
         color: inherit;
-        font-size: 18px;
+        @apply text-sm;
         @apply flex gap-2 items-center;
         @apply text-slate-400;
-        @apply border border-neutral-800 px-3 py-0.5 rounded-full;
+        @apply border border-neutral-800 pl-4 rounded-full;
     }
 
     a:not(.current) {
-        @apply hover:text-slate-500 focus:text-slate-500;
+        @apply hover:text-slate-300 focus:text-slate-300;
     }
 
     a.current {
@@ -191,15 +194,8 @@
     }
 
     a.current small {
-        color: rgb(255, 78, 152);
-        background: hsla(315, 79%, 45%, 0.57);
-    }
-
-
-    .top-area {
-        display: flex;
-        justify-content: space-between;
-        gap: 120px;
+        color: rgb(254, 81, 153);
+        background: hsla(315, 84%, 35%, 0.57);
     }
     
     .project-grid {
