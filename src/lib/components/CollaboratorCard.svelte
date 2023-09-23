@@ -5,7 +5,7 @@
     export let role: string
 </script>
 
-<svelte:element this={person.website ? 'a' : 'div'} class="person-card"
+<svelte:element this={person.website ? 'a' : 'div'} class="person-card group"
     href={person.website} target="_blank" rel="noopener noreferrer"
 >
     <div>
@@ -57,7 +57,7 @@
         gap: 10px;
         align-items: center;
         pointer-events: none;
-        @apply bg-zinc-900 text-neutral-200 rounded;
+        @apply bg-zinc-900 text-neutral-200 group-hover:text-neutral-100 group-hover:bg-zinc-800 rounded;
     }
 
     .person-card > div {
@@ -67,6 +67,10 @@
         gap: 5px;
         padding: 5px;
         z-index: 1;
+    }
+
+    .person-card h3 {
+        @apply text-gray-400 group-hover:text-gray-300;
     }
 
     .img-wrap {
@@ -95,6 +99,6 @@
     }
 
     p {
-        @apply text-sm text-neutral-500;
+        @apply text-sm text-neutral-500 group-hover:text-neutral-400;
     }
 </style>
