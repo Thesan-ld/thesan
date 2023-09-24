@@ -24,7 +24,7 @@
     }
 
     .glass {
-        @apply bg-slate-950/50 py-5 px-24 my-8 rounded-lg shadow-lg;
+        @apply bg-slate-950/50 p-4 sm:py-5 sm:px-24 my-8 rounded-lg shadow-lg;
         backdrop-filter: blur(10px);
     }
 
@@ -58,7 +58,7 @@
     }
 
     .img-wrapper {
-        margin-inline-start: -250px;
+        @apply -ml-48 sm:-ml-32 md:-ml-64;
         z-index: -1;
         @apply relative rounded-lg overflow-hidden h-full;
         @apply grid place-items-center;
@@ -73,5 +73,11 @@
     img {
         @apply absolute inset-0 w-full h-full object-cover;
         filter: brightness(1.2) saturation(.5);
+    }
+
+    @media (max-width: 450px) {
+        section {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
