@@ -43,7 +43,7 @@
         margin-top: 0;
     }
 
-    a:after {
+    a:not([href*="localhost"], [href^="#"], [href^="/"], [href*="thesanld.com"]):after {
         content: '';
     }
 
