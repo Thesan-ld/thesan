@@ -45,12 +45,12 @@
     }
 
     section.hasImage {
-        grid-template-columns: 1fr 1fr;
+        @apply sm:grid-cols-2;
     }
 
     .content {
         max-inline-size: 800px;
-        width: 100%;
+        flex: 1;
         margin-block: 8px; 
         margin-inline-start: 30px;
         align-self: stretch;
@@ -98,10 +98,11 @@
         justify-self: stretch;
         overflow: hidden;
         margin-inline-start: -30px;
+        @apply -order-1 sm:order-1;
     }
 
     figure.first {
-        order: -1;
+        @apply -order-1;
     }
 
     figure img {
@@ -117,6 +118,7 @@
     .portrait figure {
         height: auto;
         max-height: 75vh;
+        max-width: 100%;
     }
 
     .portrait img {

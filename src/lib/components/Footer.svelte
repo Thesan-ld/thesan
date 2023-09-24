@@ -57,7 +57,7 @@
     footer section {
         display: flex;
         justify-content: space-between;
-        padding-block-end: 2rem;
+        @apply pb-8 px-4;
     }
 
 </style>

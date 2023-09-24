@@ -5,9 +5,9 @@
     export let data: ExpandedLogoGrid
 </script>
 
-<section>
+<section style={`--columns: ${data.columns}`}>
     <PortableText value={data.sectionTextContent}/>
-    <ul class="grid" style={`--columns: ${data.columns}`}>
+    <ul class="grid">
         {#each data.logos as logo (logo._id)}
         <li>
             <img src={logo.url} alt={logo.originalFilename} />
@@ -33,7 +33,7 @@
 
     li {
         width: calc(100% / var(--columns) - (var(--grid-gap) * (var(--columns) - 1) / var(--columns) ));
-        margin-block: calc(var(--grid-gap) * 2);
+        margin-block: var(--grid-gap);
         text-decoration: none;
     }
 
@@ -41,5 +41,11 @@
         width: 100%;
         height: auto;
         object-fit: contain;
+    }
+
+    @media (max-width: 450px) {
+        .grid {
+            --columns: 2;
+        }
     }
 </style>
